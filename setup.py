@@ -12,7 +12,7 @@ setup(
     long_description=open('README.rst').read(),
     author=open_app.__author__,
     author_email='admin@incuna.com',
-    url='http://incuna.com/',
+    url='https://github.com/incuna/open-app-template/',
     install_requires=[],
     zip_safe=False,
 )
