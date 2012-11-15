@@ -1,4 +1,3 @@
-import errno
 from optparse import make_option
 import os
 import re
@@ -38,33 +37,23 @@ class Command(TemplateCommand):
         self.app_or_project = app_or_project = 'project'
         self.paths_to_remove = []
         self.verbosity = int(options.get('verbosity'))
-        options['import_name'] = import_name
 
         if not options['template']:
             options['template'] = os.path.join(os.path.dirname(open_app.__file__), 'app_name')
 
         # if some directory is given, make sure it's nicely expanded
-        if target is None:
-            top_dir = os.path.join(os.getcwd(), name)
-            try:
-                os.makedirs(top_dir)
-            except OSError as e:
-                if e.errno == errno.EEXIST:
-                    message = "'%s' already exists" % top_dir
-                else:
-                    message = e
-                raise CommandError(message)
-        else:
-            top_dir = os.path.abspath(os.path.expanduser(target))
-            if not os.path.exists(top_dir):
-                raise CommandError("Destination directory '%s' does not "
-                                   "exist, please create it first." % top_dir)
+        top_dir = os.path.abspath(os.path.expanduser(target))
+        if not os.path.exists(top_dir):
+            raise CommandError("Destination directory '%s' does not "
+                               "exist, please create it first." % top_dir)
 
         options['app_name'] = name = os.path.basename(top_dir)
 
         # generate the import name if it's not provided
         if import_name is None:
-            import_name = name.replace('-', '_')
+            import_name = name
+        import_name = import_name.replace('-', '_')
+        options['import_name'] = import_name
 
         # If it's not a valid directory name.
         if not re.search(r'^[_a-zA-Z]\w*$', import_name):
