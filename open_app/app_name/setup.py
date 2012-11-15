@@ -12,8 +12,7 @@ setup(
     long_description=open('README.rst').read(),
     author={{ import_name }}.__author__,
     author_email='admin@incuna.com',
-    url='http://incuna.com/',
+    url='https://github.com/incuna/{{ app_name }}/',
     install_requires=[],
     zip_safe=False,
 )
-
